@@ -1,4 +1,4 @@
-const db = require('../config/config');
+const db = require('../config/db');
 
 const User = {
     getAll: (callback) => {

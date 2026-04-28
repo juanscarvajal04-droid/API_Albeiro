@@ -10,13 +10,14 @@ const swaggerOptions = {
             contact: {
                 name: 'Juan Sebastian Carvajal',
             },
-            servers: [
-                {
-                    url: 'http://10.1.196.248:3000', // Tu IP del SENA
-                    description: 'Servidor Local (SENA)'
-                },
-            ],
         },
+        // Servers va aquí afuera de info
+        servers: [
+            {
+                url: 'http://10.1.196.248:3000',
+                description: 'Servidor Local (SENA)'
+            },
+        ],
         components: {
             securitySchemes: {
                 bearerAuth: {
@@ -27,8 +28,10 @@ const swaggerOptions = {
             },
         },
     },
-    // Ojo: Asegúrate de que la ruta a tus archivos .js sea correcta
-    apis: ['./routes/*.js'], 
+    // Asegúrate de que la ruta sea exacta desde la raíz de Backend
+    // Busca esta línea y déjala así (ruta directa al archivo):
+    // En config/swagger.js
+    apis: [],
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
