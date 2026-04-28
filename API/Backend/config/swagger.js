@@ -1,4 +1,4 @@
-const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerJsDoc = require('swagger-jsdoc');
 
 const swaggerOptions = {
     swaggerDefinition: {
@@ -6,17 +6,13 @@ const swaggerOptions = {
         info: {
             title: 'API_ALBEIRO - Gestión de Usuarios',
             version: '1.0.0',
-            description: 'API para el proyecto de ADSO en el SENA',
-            contact: {
-                name: 'Juan Sebastian Carvajal',
-            },
+            description: 'API para el proyecto de ADSO en el SENA con control de Roles',
         },
-        // Servers va aquí afuera de info
         servers: [
             {
                 url: 'http://10.1.196.248:3000',
                 description: 'Servidor Local (SENA)'
-            },
+            }
         ],
         components: {
             securitySchemes: {
@@ -24,15 +20,16 @@ const swaggerOptions = {
                     type: 'http',
                     scheme: 'bearer',
                     bearerFormat: 'JWT',
-                },
-            },
+                }
+            }
         },
+        security: [{
+            bearerAuth: []
+        }]
     },
-    // Asegúrate de que la ruta sea exacta desde la raíz de Backend
-    // Busca esta línea y déjala así (ruta directa al archivo):
-    // En config/swagger.js
-    apis: [],
+    // Esto lee todos los archivos .js dentro de la carpeta routes
+    apis: ['./routes/*.js'], 
 };
 
-const swaggerSpec = swaggerJSDoc(swaggerOptions);
+const swaggerSpec = swaggerJsDoc(swaggerOptions);
 module.exports = swaggerSpec;

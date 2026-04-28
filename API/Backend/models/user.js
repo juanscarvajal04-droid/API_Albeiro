@@ -2,9 +2,15 @@ const db = require('../config/db');
 
 const User = {
     getAll: (callback) => {
-        return db.query('SELECT * FROM users', callback);
+        db.query('SELECT * FROM users', callback);
     },
-    // Aquí irían el resto de funciones como create, findById, etc.
+    getByEmail: (email, callback) => {
+        // Buscamos al usuario y su rol
+        db.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
+            if (err) return callback(err, null);
+            callback(null, results[0]);
+        });
+    }
 };
 
 module.exports = User;
