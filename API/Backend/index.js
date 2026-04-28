@@ -1,5 +1,12 @@
-import express from 'express';
-import swaggerUI from "swagger-ui-express";
-const port = 3306
+const app = require('./server');
+require('dotenv').config();
 
-app.use("/api_do",swaggerUI.serve,swaggerUI.setup())
+const PORT = process.env.PORT || 3000;
+const IP_ADDRESS = '10.1.196.248'; // Tu IP del SENA
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log('---------------------------------------------------------');
+    console.log(`Servidor corriendo en: http://${IP_ADDRESS}:${PORT}`);
+    console.log(`Swagger disponible en: http://${IP_ADDRESS}:${PORT}/api-docs`);
+    console.log('---------------------------------------------------------');
+});
