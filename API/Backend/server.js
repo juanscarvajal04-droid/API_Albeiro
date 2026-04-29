@@ -1,27 +1,60 @@
+// server.js
 const express = require('express');
+const logger = require('morgan');
 const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./config/swagger'); 
-const userRoutes = require('./routes/userRoutes');
-const productRoutes = require('./routes/productRoutes'); // 1. Agregamos esta línea
+const swaggerSpec = require('./config/swagger');
+const usersRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-// Middlewares
+// Middlewares globales
+app.use(logger('dev'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// Rutas
-app.use('/api/users', userRoutes);
-app.use('/api/products', productRoutes); // 2. Agregamos esta línea para los productos
+// Documentación de swagger
+const swaggerOptions = {  
+  swaggerOptions: {
+    docExpansion: 'list',           
+    defaultModelsExpandDepth: -1,   
+    defaultModelExpandDepth: 1,     
+    displayRequestDuration: true,   
+    filter: false,                  
+    layout: 'BaseLayout',  
+    showExtensions: true,
+    showCommonExtensions: true,
+    deepLinking: true,         
+    persistAuthorization: true,
+    tagsSorter: 'alpha',       
+    operationsSorter: function(a, b) {
+      const methodOrder = { 'post': 1, 'get': 2, 'put': 3, 'delete': 4 };
+      return methodOrder[a.get('method')] - methodOrder[b.get('method')];
+    }  
+  }  
+};
 
-// Swagger UI
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec)); 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, swaggerOptions));
+
+// Rutas
+app.use('/api/users', usersRoutes);
+
+// Endpoints de prueba
+app.get('/', (req, res) => {
+    res.send('Ruta raíz del Backend');
+});
+
+app.get('/test', (req, res) => {
+    res.send('Ruta TEST');
+});
+
+// Manejo de errores
+app.use((err, req, res, next) => {
+    console.log(err);
+    res.status(err.status || 500).send(err.stack);
+});
+
+console.log('📚 Swagger disponible en: http://10.1.196.248:3000/api-docs');
 
 module.exports = app;
-
-const IP_ADDRESS = '10.1.196.248'; 
-console.log('---------------------------------------------------------');
-console.log(`🚀 Servidor corriendo en: http://${IP_ADDRESS}:3000`);
-console.log(`📚 Swagger disponible en: http://${IP_ADDRESS}:3000/api-docs`);
-console.log('---------------------------------------------------------');
