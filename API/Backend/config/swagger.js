@@ -10,8 +10,8 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://10.1.196.248:3000',
-                description: 'Servidor Local (SENA)'
+                url: 'http://192.168.0.3:3000',
+                description: 'Servidor(CASA)'
             }
         ],
         components: {

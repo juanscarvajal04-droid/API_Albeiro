@@ -20,8 +20,3 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 module.exports = app;
 
-const IP_ADDRESS = '10.1.196.248'; 
-console.log('---------------------------------------------------------');
-console.log(`🚀 Servidor corriendo en: http://${IP_ADDRESS}:3000`);
-console.log(`📚 Swagger disponible en: http://${IP_ADDRESS}:3000/api-docs`);
-console.log('---------------------------------------------------------');
